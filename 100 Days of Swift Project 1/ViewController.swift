@@ -34,14 +34,17 @@ class ViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Picture", for: indexPath)
-        cell.textLabel?.text = pictures[indexPath.row]
+        cell.textLabel?.text = pictures.sorted()[indexPath.row]
+        cell.textLabel?.font = .preferredFont(forTextStyle: .body)
         
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let viewController = storyboard?.instantiateViewController(withIdentifier: "Detail") as? DetailViewController {
-            viewController.selectedImage = pictures[indexPath.row]
+            viewController.selectedImage = pictures.sorted()[indexPath.row]
+            viewController.imageIndex = indexPath.row + 1
+            viewController.imageCount = pictures.count
             
             navigationController?.pushViewController(viewController, animated: true)
         }
